@@ -1,8 +1,16 @@
 extends layout
 block content
     main.container
-        h1=title
         div.tableProduct
+            div.headerTable
+                h2=title
+                form(action="/newProduct" method="GET")
+                    button.btn-agregar(type="submit") Nuevo Producto
+                label(for="sucursal-filtro") Sucursal:
+                select(name="sucursal-filtro")
+                    option(value="") Todos
+                    - for (let i = 1; i <= sucursales.length; i++)
+                        option(value=i)= i
             table
                 thead
                     tr
