@@ -1,0 +1,24 @@
+extends layout
+block content
+    main.container
+        h1=title
+        div.tableProduct
+            table
+                thead
+                    tr
+                        th Producto
+                        th Precio
+                        th Cantidad
+                        th Sucursal
+                        th Opciones
+                tbody
+                - for (let producto of productos)
+                    tr
+                        td= producto.nombre
+                        td= producto.precio
+                        td= `${producto.cantidad} ${producto.tipo_unidad}`
+                        td= producto.sucursal_id
+                        td
+                            a(href=`/order/${producto.id}`) Pedir
+                            a(href=`/edit/${producto.id}`) Editar
+                            a(href=`/delete/${producto.id}`) Eliminar

@@ -5,12 +5,19 @@
   "main": "app.js",
   "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon app.js"
   },
   "keywords": [],
   "author": "David Payan Alvarado",
   "license": "ISC",
   "dependencies": {
-    "mysql2": "^3.9.7"
+    "cors": "^2.8.5",
+    "express": "^4.19.2",
+    "helmet": "^7.1.0",
+    "morgan": "^1.10.0",
+    "mysql2": "^3.9.7",
+    "nodemon": "^3.1.0",
+    "pug": "^3.0.2"
   }
 }
