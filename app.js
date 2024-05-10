@@ -29,7 +29,7 @@ app.set("view engine", "pug");
 
 //Configurar rutas
 app.get("/", controlador.mostrarInventario);
-app.get("/newProduct");
+app.get("/newProduct", controlador.nuevoProducto);
 app.post("/newProduct");
 app.get("/edit/:id");
 app.post("/edit/:id");

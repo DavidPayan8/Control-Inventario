@@ -1,0 +1,47 @@
+extends layout 
+block content
+    main.container
+        div#openModal.modalDialog
+            a.close(href="#close" title="Close") X
+            h2.p-2 Datos del pedido:
+            div.card-headers
+                h4#nameProduct
+            div.card-body
+                p.card-text#cantidad
+                p.card-text#emailCard
+                    strong Email:
+                p.card-text#desCard
+                    strong Detalles:
+                button.btn.btn-green.pt-2#confirm-order(type="button") Confirmar
+                button.btn.btn-danger.pt-2#cancel-order(type="button") Cancelar 
+        form#agregarForm
+            div.datos-producto
+                h3 Datos Productos
+                label(for="nombreProducto") Nombre
+                input(type="text" name="nombreProducto" required)
+                label(for="precio") Precio por U/Kg
+                input(type="number" step="0.01"  name="precio" required)
+                label(for="cantidad") Cantidad
+                input(type="number" name="cantidad" required)
+                label(for="unidad") U
+                input(type="radio", name="unidad", value="U", checked)
+                label(for="unidad") Kg
+                input(type="radio", name="unidad", value="Kg")
+                label(for="marca") Marca
+                input(type="text" name="marca" required)
+                label(for="desc") Descripcion
+                input(type="text-area" name="desc")
+            div.datos-proveedor
+                h3 Datos Proveedor
+                label(for="nombreProveedor") Nombre
+                input(type="text" name="nombreProveedor" required)
+                label(for="cantidad") Cantidad a pedir
+                input(type="number" name="cantidadPedido" required)
+                label(for="emil") Email
+                input(type="email" name="email" required)
+                label(for="desc") Desc
+                input(type="text-area" name="descProveedor")
+            div.btn-guardar
+                button#btn-guardarProducto(type="submit") Guardar y pedir
+
+                

@@ -8,7 +8,7 @@ block content
                     button.btn-agregar(type="submit") Nuevo Producto
                 label(for="sucursal-filtro") Sucursal:
                 select(name="sucursal-filtro")
-                    option(value="") Todos
+                    option(value="") -Todos-
                     - for (let i = 1; i <= sucursales.length; i++)
                         option(value=i)= i
             table
