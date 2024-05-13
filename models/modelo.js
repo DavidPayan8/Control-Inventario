@@ -36,8 +36,8 @@ async function agregar_producto(newProducto,proveedor) {
     nuevo_proveedor(proveedor)
 
     //Consulta para agregar un nuevo producto.
-    const query = `INSERT INTO productos (nombre, tipo_unidad, cantidad, precio, marca, descripcion, proveedor_nombre) VALUES
-    ('${newProducto.nombre}', '${newProducto.unidad}', ${newProducto.cantidad}, ${newProducto.precio}, '${newProducto.marca}', '${newProducto.descripcion}', '${proveedor.nombre}'),`;
+    const query = `INSERT INTO productos (nombre, sucursal_id, tipo_unidad, cantidad, precio, marca, descripcion, proveedor_nombre) VALUES
+    ('${newProducto.nombreProducto}',${newProducto.sucursal},'${newProducto.unidad}', ${newProducto.cantidad}, ${newProducto.precio}, '${newProducto.marca}', '${newProducto.desc}', '${proveedor.nombreProveedor}');`;
 
     // Ejecutar la consulta SQL.
     const resultados = await hacer_consulta(query);
@@ -50,7 +50,7 @@ async function agregar_producto(newProducto,proveedor) {
 //Crear un nuevo proveedor.
 async function nuevo_proveedor(proveedor) {
   const query = `INSERT INTO proveedor (nombre, descripcion, email) VALUES
-    ('${proveedor.nombre}', '${proveedor.descripcion}', '${proveedor.email}');`;
+    ('${proveedor.nombreProveedor}', '${proveedor.descProveedor}', '${proveedor.email}');`;
 
   await hacer_consulta(query);
 }

@@ -2,21 +2,26 @@ extends layout
 block content
     main.container
         div#openModal.modalDialog
-            a.close(href="#close" title="Close") X
-            h2.p-2 Datos del pedido:
-            div.card-headers
-                h4#nameProduct
             div.card-body
+                h2.titlePedido Datos del pedido:
+                h4#nameProduct
+                p.card-text#sucursalCard
+                p.card-text#marcaCard
                 p.card-text#cantidad
                 p.card-text#emailCard
-                    strong Email:
                 p.card-text#desCard
-                    strong Detalles:
-                button.btn.btn-green.pt-2#confirm-order(type="button") Confirmar
-                button.btn.btn-danger.pt-2#cancel-order(type="button") Cancelar 
+                form#enviarForm(action="/newProduct" method="POST") 
+                    input(type="hidden" id="producto" name="producto" value="")
+                    input(type="hidden" id="proveedor" name="proveedor" value="")
+                    button.btn#confirm-order(type="submit") Confirmar
+                    button.btn#cancel-order(type="button") Cancelar
         form#agregarForm
             div.datos-producto
                 h3 Datos Productos
+                label(for="sucursal") Sucursal
+                select(name="sucursal")
+                    - for (let i = 1; i <= sucursales.length; i++)
+                        option(value=i)= i
                 label(for="nombreProducto") Nombre
                 input(type="text" name="nombreProducto" required)
                 label(for="precio") Precio por U/Kg
