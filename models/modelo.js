@@ -47,6 +47,19 @@ async function agregar_producto(newProducto,proveedor) {
   }
 }
 
+//Buscar producto por id.
+async function buscarProducto(id){
+  try {
+    const query = `SELECT * FROM productos where id = ${id}`;
+    let result = hacer_consulta(query);
+    console.log(result)
+
+    return result
+  } catch (err) {
+    console.log(err)
+  }
+}
+
 //Crear un nuevo proveedor.
 async function nuevo_proveedor(proveedor) {
   const query = `INSERT INTO proveedor (nombre, descripcion, email) VALUES
@@ -59,5 +72,6 @@ export default{
     obtener_sucursales,
     obtener_todos_productos,
     agregar_producto,
-    nuevo_proveedor
+    nuevo_proveedor,
+    buscarProducto
 }

@@ -31,7 +31,7 @@ app.set("view engine", "pug");
 app.get("/", controlador.mostrarInventario);
 app.get("/newProduct", controlador.nuevoProducto);
 app.post("/newProduct", controlador.agregarProducto);
-app.get("/edit/:id");
+app.get("/edit/:id", controlador.getEditForm);
 app.post("/edit/:id");
 app.get("/report");
 app.get("/delete/:id");
