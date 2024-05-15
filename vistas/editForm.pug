@@ -1,7 +1,7 @@
 extends layout 
 block content
     main.container
-        form(action=`/edit/${producto.id}` method="POST")
+        form(action=`/edit/${producto.id}` , method="POST")
             div.edit-producto
                 h3 Editar producto 
                 label(for="sucursal") Sucursal

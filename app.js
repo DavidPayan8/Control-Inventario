@@ -32,9 +32,11 @@ app.get("/", controlador.mostrarInventario);
 app.get("/newProduct", controlador.nuevoProducto);
 app.post("/newProduct", controlador.agregarProducto);
 app.get("/edit/:id", controlador.getEditForm);
-app.post("/edit/:id");
+app.post("/edit/:id", controlador.confirmEdit);
+app.get("/order/:id", controlador.getOrderForm);
+app.post("/order/:id", controlador.confirmOrder);
 app.get("/report");
-app.get("/delete/:id");
+app.get("/delete/:id", controlador.borrarProducto);
 
 app.use(errorController.error404);
 

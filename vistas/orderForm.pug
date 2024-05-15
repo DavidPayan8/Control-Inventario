@@ -1,0 +1,13 @@
+extends layout 
+block content
+    main.container
+        form(action=`/order/${producto.id}` , method="POST")
+            div.order-producto
+                h3 Pedir producto 
+                label(for="cantidadPedido") Cantidad
+                input(type="number" name="cantidadPedido"  required)
+                label(for="proveedor") Proveedor
+                select(name="proveedor")
+                    each opcion in proveedores
+                        option(value=opcion.nombre) #{opcion.nombre}
+                button#btn-orderProduct(type="submit") Pedir

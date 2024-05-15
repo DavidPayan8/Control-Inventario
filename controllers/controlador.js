@@ -1,4 +1,3 @@
-import { hacer_consulta } from "../models/bbdd.js";
 import modelo from "../models/modelo.js";
 
 const mostrarInventario = async (req, res) => {
@@ -40,18 +39,94 @@ const getEditForm = async (req, res) => {
   let sucursales = await modelo.obtener_sucursales();
 
   if (producto.length === 0) {
-    res.render("error404");
+    res.render("/");
   } else {
-    res.render("editForm", { producto:producto[0], sucursales });
+    res.render("editForm", { producto: producto[0], sucursales });
   }
 };
 
-const borrarProducto = async (req, res) => {};
+const confirmEdit = async (req, res) => {
+  let id = parseInt(req.params.id);
+  let hayProducto = await modelo.buscarProducto(id);
+
+  if (hayProducto.length === 0) {
+    res.redirect("/");
+  } else {
+    //Recogemos los nuevos parametros
+    let nombre = req.body.nombreProducto;
+    let sucursal = req.body.sucursal;
+    let precio = req.body.precio;
+    let cantidad = req.body.cantidad;
+    let unidad = req.body.unidad;
+    let marca = req.body.marca;
+    let desc = req.body.desc;
+
+    let producto = {
+      id,
+      nombre,
+      sucursal,
+      precio,
+      cantidad,
+      unidad,
+      marca,
+      desc,
+    };
+
+    //Hacemos la consulta
+    await modelo.editarProducto(producto);
+
+    res.redirect("/");
+  }
+};
+
+const getOrderForm = async (req, res) => {
+  let id = parseInt(req.params.id);
+  let producto = await modelo.buscarProducto(id);
+  let proveedores = await modelo.obtener_proveedores();
+
+  if (producto.length === 0) {
+    res.render("/");
+  } else {
+    res.render("orderForm", { producto: producto[0], proveedores });
+  }
+};
+
+const confirmOrder = async (req,res) => {
+  let id = parseInt(req.params.id);
+  let hayProducto = await modelo.buscarProducto(id);
+
+  if (hayProducto.length === 0) {
+    res.redirect("/");
+  } else {
+    alert("PEDIDO HECHO");
+    
+    setTimeout(() => {
+      res.redirect("/");
+    }, 3000);
+  }
+}
+
+const borrarProducto = async (req, res) => {
+  let id = parseInt(req.params.id);
+  let hayProducto = await modelo.buscarProducto(id);
+
+  if (hayProducto.length === 0) {
+    res.redirect("/");
+  } else {
+    console.log(hayProducto[0].id);
+    await modelo.eliminarProducto(id);
+    console.log("Eliminado");
+    res.redirect("/");
+  }
+};
 
 export default {
   mostrarInventario,
   nuevoProducto,
   agregarProducto,
   getEditForm,
+  getOrderForm,
+  confirmEdit,
+  confirmOrder,
   borrarProducto,
 };
