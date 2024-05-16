@@ -1,9 +1,10 @@
 extends layout 
 block content
     main.container
-        form(action=`/order/${producto.id}` , method="POST")
+        form#orderForm(action=`/order/${producto.id}` , method="POST")
             div.order-producto
-                h3 Pedir producto 
+                h3 Pedir producto
+                h4= producto.nombre
                 label(for="cantidadPedido") Cantidad
                 input(type="number" name="cantidadPedido"  required)
                 label(for="proveedor") Proveedor

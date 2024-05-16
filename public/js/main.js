@@ -11,24 +11,26 @@ let nombreProveedor;
 let cantidadPedido;
 let email;
 let descProveedor;
+let pedidoRealizado = false;
 
 window.addEventListener("DOMContentLoaded", (ev) => {
-  ev.preventDefault()
+  ev.preventDefault();
 
   const agregarForm = document.getElementById("agregarForm");
   const enviarForm = document.getElementById("enviarForm");
   const btnCancelar = document.getElementsByClassName("cancel-order");
   const openModal = document.getElementById("openModal");
-  const btnNewProducto = document.getElementById("btn-guardarProducto");
-  const sucursalCard = document.getElementById("sucursalCard")
+  const orderForm = document.getElementById("orderForm");
+  const orderModal = document.getElementById("orderModal");
+  const sucursalCard = document.getElementById("sucursalCard");
   const nameProduct = document.getElementById("nameProduct");
-  const cantidadCard= document.getElementById("cantidad");
+  const cantidadCard = document.getElementById("cantidad");
   const emailCard = document.getElementById("emailCard");
   const desCard = document.getElementById("desCard");
   const marcaCard = document.getElementById("marcaCard");
 
   agregarForm.addEventListener("submit", (ev) => {
-    ev.preventDefault()
+    ev.preventDefault();
 
     //Datos producto
     sucursal = parseInt(agregarForm["sucursal"].value);
@@ -38,7 +40,15 @@ window.addEventListener("DOMContentLoaded", (ev) => {
     unidad = agregarForm["unidad"].value;
     marca = agregarForm["marca"].value;
     desc = agregarForm["desc"].value;
-    producto = { sucursal, nombreProducto, precio, cantidad, unidad, marca, desc };
+    producto = {
+      sucursal,
+      nombreProducto,
+      precio,
+      cantidad,
+      unidad,
+      marca,
+      desc,
+    };
 
     //Datos proveedor
     nombreProveedor = agregarForm["nombreProveedor"].value;
@@ -60,10 +70,29 @@ window.addEventListener("DOMContentLoaded", (ev) => {
     openModal.style.display = "block";
   });
 
-  btnCancelar.addEventListener("click", (ev) =>{
-    ev.preventDefault()
+  btnCancelar.addEventListener("click", (ev) => {
+    ev.preventDefault();
 
     openModal.style.display = "none";
   });
 
+  /* if(orderModal.dataset.active === "true"){
+    console.log("HOLA EL DATA ES -",orderModal.dataset.active)
+  } */
+  
 });
+
+if(orderModal.className === "active"){
+  openOrderModal()
+}
+
+
+function openOrderModal() {
+
+  orderModal.innerHTML += `
+      <h2>¡Pedido realizado con exito!</h2>
+    `;
+  setTimeout(() => {
+    orderModal.innerHTML = "";
+  }, 3000);
+}

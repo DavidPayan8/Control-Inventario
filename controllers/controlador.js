@@ -1,11 +1,19 @@
 import modelo from "../models/modelo.js";
 
+
+let orderModalActive = "";
+
 const mostrarInventario = async (req, res) => {
   //Obtener todos los datos a mostrar en el index
   let productos = await modelo.obtener_todos_productos();
   let sucursales = await modelo.obtener_sucursales();
 
-  res.render("index", { title: "Inventario", productos, sucursales });
+  if(orderModalActive){
+    res.render("index", { title: "Inventario", productos, sucursales, orderModalActive});
+    orderModalActive = "";
+  }else{
+    res.render("index", { title: "Inventario", productos, sucursales ,orderModalActive});
+  }
 };
 
 const nuevoProducto = async (req, res) => {
@@ -98,11 +106,8 @@ const confirmOrder = async (req,res) => {
   if (hayProducto.length === 0) {
     res.redirect("/");
   } else {
-    alert("PEDIDO HECHO");
-    
-    setTimeout(() => {
-      res.redirect("/");
-    }, 3000);
+    orderModalActive = "active";
+    res.redirect("/");
   }
 }
 

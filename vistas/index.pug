@@ -1,6 +1,7 @@
 extends layout
 block content
     main.container
+        div#orderModal(class=`${orderModalActive}`)
         div.tableProduct
             div.headerTable
                 h2=title
