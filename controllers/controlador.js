@@ -1,6 +1,5 @@
 import modelo from "../models/modelo.js";
 
-
 let orderModalActive = "";
 
 const mostrarInventario = async (req, res) => {
@@ -8,11 +7,21 @@ const mostrarInventario = async (req, res) => {
   let productos = await modelo.obtener_todos_productos();
   let sucursales = await modelo.obtener_sucursales();
 
-  if(orderModalActive){
-    res.render("index", { title: "Inventario", productos, sucursales, orderModalActive});
+  if (orderModalActive) {
+    res.render("index", {
+      title: "Inventario",
+      productos,
+      sucursales,
+      orderModalActive,
+    });
     orderModalActive = "";
-  }else{
-    res.render("index", { title: "Inventario", productos, sucursales ,orderModalActive});
+  } else {
+    res.render("index", {
+      title: "Inventario",
+      productos,
+      sucursales,
+      orderModalActive,
+    });
   }
 };
 
@@ -99,17 +108,34 @@ const getOrderForm = async (req, res) => {
   }
 };
 
-const confirmOrder = async (req,res) => {
+const confirmOrder = async (req, res) => {
   let id = parseInt(req.params.id);
   let hayProducto = await modelo.buscarProducto(id);
+  let pedido = {
+    id,
+    proveedorNombre: req.body.proveedor,
+    fechaHoy: new Date().toISOString().slice(0, 10),
+  };
 
   if (hayProducto.length === 0) {
     res.redirect("/");
   } else {
+    await modelo.nuevoProducto(pedido);
     orderModalActive = "active";
     res.redirect("/");
   }
-}
+};
+
+const mostrarVistaGrafico = async (req, res) =>{
+res.render("report");
+};
+
+const obtenerGrafico = async (req, res) => {
+  let productos = await modelo.obtener_todos_productos();
+  let pedidos = await modelo.obtener_todos_pedidos();
+
+  res.json({productos,pedidos});
+};
 
 const borrarProducto = async (req, res) => {
   let id = parseInt(req.params.id);
@@ -120,7 +146,6 @@ const borrarProducto = async (req, res) => {
   } else {
     console.log(hayProducto[0].id);
     await modelo.eliminarProducto(id);
-    console.log("Eliminado");
     res.redirect("/");
   }
 };
@@ -133,5 +158,7 @@ export default {
   getOrderForm,
   confirmEdit,
   confirmOrder,
+  mostrarVistaGrafico,
+  obtenerGrafico,
   borrarProducto,
 };

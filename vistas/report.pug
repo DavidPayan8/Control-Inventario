@@ -1,0 +1,23 @@
+extends layout
+block content
+    main.container
+        h1 Montañas rusas dataviz
+        p Visualización de estadísticas globales
+        hr
+        section.cols-2
+            figure
+            h2 Comparativa de modelos
+            canvas#modelsChart
+            figure
+             h2 Comparativa de características:
+                select#featuresOptions
+                    option(value="height") Altura (m)
+                    option(value="length") Longitud (m)
+                    option(value="speed") Velocidad (km/h)
+            canvas#featuresChart
+        section.cols-1
+            figure
+            h2 Construcciones por año
+            canvas#yearsChart(height="300px")
+block extra-scripts
+    script(src="js/report.js") 

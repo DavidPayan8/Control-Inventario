@@ -74,12 +74,7 @@ window.addEventListener("DOMContentLoaded", (ev) => {
     ev.preventDefault();
 
     openModal.style.display = "none";
-  });
-
-  /* if(orderModal.dataset.active === "true"){
-    console.log("HOLA EL DATA ES -",orderModal.dataset.active)
-  } */
-  
+  });  
 });
 
 if(orderModal.className === "active"){

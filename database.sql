@@ -41,6 +41,16 @@ CREATE TABLE IF NOT EXISTS productos (
     FOREIGN KEY (proveedor_nombre) REFERENCES proveedor(nombre)
 );
 
+-- Crear la tabla "linea_pedido"
+CREATE TABLE IF NOT EXISTS linea_pedido (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    producto_id INT,
+    proveedor_nombre VARCHAR(255),
+    fecha_pedido DATE,
+    FOREIGN KEY (producto_id) REFERENCES productos(id),
+    FOREIGN KEY (proveedor_nombre) REFERENCES proveedor(nombre)
+);
+
 -- Insertar datos de ejemplo en la tabla tienda
 INSERT INTO tienda (ubicacion) VALUES
 ('Sevilla'),
@@ -58,10 +68,18 @@ INSERT INTO proveedor (nombre, descripcion, email) VALUES
 ('CleanSupplies', 'Proveedor de productos de limpieza', 'cleansupplies@example.com');
 
 -- Insertar datos de ejemplo en la tabla productos
-INSERT INTO productos (nombre, tipo_unidad, cantidad, precio, marca, descripcion, proveedor_nombre) VALUES
-('DoggyDelight', 'kg', 10, 5.99, 'Marca A', 'Alimento para perros premium', 'FoodCo'),
-('CottonTee', 'u', 50, 2.50, 'Marca B', 'Camiseta de algodón de alta calidad', 'FashionWholesale'),
-('TechPhone', 'u', 20, 8.75, 'Marca C', 'Smartphone con las últimas características', 'TechSupply'),
-('PowerDrill', 'u', 30, 49.99, 'Marca D', 'Taladro inalámbrico potente', 'FurnitureDirect'),
-('CleanAll', 'kg', 5, 3.25, 'Marca E', 'Limpiador multiusos para el hogar', 'CleanSupplies');
+INSERT INTO productos (nombre, sucursal_id ,tipo_unidad, cantidad, precio, marca, descripcion, proveedor_nombre) VALUES
+('DoggyDelight', 1 ,'kg', 10, 5.99, 'Marca A', 'Alimento para perros premium', 'FoodCo'),
+('CottonTee', 2 ,'u', 50, 2.50, 'Marca B', 'Camiseta de algodón de alta calidad', 'FashionWholesale'),
+('TechPhone', 3 ,'u', 20, 8.75, 'Marca C', 'Smartphone con las últimas características', 'TechSupply'),
+('PowerDrill', 4 ,'u', 30, 49.99, 'Marca D', 'Taladro inalámbrico potente', 'FurnitureDirect'),
+('CleanAll', 5 ,'kg', 5, 3.25, 'Marca E', 'Limpiador multiusos para el hogar', 'CleanSupplies');
+
+
+-- Insertar datos de ejemplo en la tabla linea_pedido
+INSERT INTO linea_pedido (producto_id, proveedor_nombre, fecha_pedido) VALUES
+    (1, 'FoodCo', '2024-01-15'),
+    (2, 'FashionWholesale', '2023-12-25'),
+    (3, 'TechSupply', '2023-11-07'),
+    (4, 'CleanSupplies', '2023-10-18'); 
 

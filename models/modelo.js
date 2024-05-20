@@ -25,6 +25,15 @@ function obtener_todos_productos() {
   return results;
 }
 
+//Obtener todos los pedidos.
+function obtener_todos_pedidos(){
+  const results = getResultados(
+    `SELECT * FROM linea_pedido;`
+  );
+  console.table(results);
+  return results;
+}
+
 //Obtener los proveedores.
 async function obtener_proveedores(){
   const results = getResultados(`SELECT * FROM proveedor;`);
@@ -90,6 +99,19 @@ async function editarProducto(producto) {
   }
 }
 
+//Nuevo pedido
+async function nuevoPedido(pedido) {
+  try {
+    const query = `INSERT INTO linea_pedido (producto_id, proveedor_nombre, fecha_pedido) 
+      VALUES (${pedido.id}, '${pedido.proveedorNombre}', '${pedido.fechaHoy}');
+    `;
+    let result = hacer_consulta(query);
+    return result;
+  } catch (err) {
+    console.log(err);
+  }
+}
+
 //Eliminar producto.
 async function eliminarProducto(id){
   try {
@@ -107,9 +129,11 @@ export default {
   obtener_sucursales,
   obtener_proveedores,
   obtener_todos_productos,
+  obtener_todos_pedidos,
   agregar_producto,
   nuevo_proveedor,
   editarProducto,
   buscarProducto,
+  nuevoPedido,
   eliminarProducto,
 };

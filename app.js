@@ -35,7 +35,8 @@ app.get("/edit/:id", controlador.getEditForm);
 app.post("/edit/:id", controlador.confirmEdit);
 app.get("/order/:id", controlador.getOrderForm);
 app.post("/order/:id", controlador.confirmOrder);
-app.get("/report");
+app.get("/report", controlador.mostrarVistaGrafico);
+app.get("/report-data", controlador.obtenerGrafico);
 app.get("/delete/:id", controlador.borrarProducto);
 
 app.use(errorController.error404);
