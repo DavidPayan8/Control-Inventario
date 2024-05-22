@@ -21,7 +21,6 @@ function obtener_todos_productos() {
   const results = getResultados(
     `SELECT id, nombre ,cantidad, precio, tipo_unidad,sucursal_id FROM productos;`
   );
-  console.table(results);
   return results;
 }
 
@@ -29,6 +28,15 @@ function obtener_todos_productos() {
 function obtener_todos_pedidos(){
   const results = getResultados(
     `SELECT * FROM linea_pedido;`
+  );
+  return results;
+}
+
+//Obtener pedidos ordenados
+function obtener_pedidos_ordenados_fecha(){
+  const results = getResultados(
+    `SELECT * FROM linea_pedido ORDER BY fecha_pedido ASC;
+    `
   );
   console.table(results);
   return results;
@@ -130,6 +138,7 @@ export default {
   obtener_proveedores,
   obtener_todos_productos,
   obtener_todos_pedidos,
+  obtener_pedidos_ordenados_fecha,
   agregar_producto,
   nuevo_proveedor,
   editarProducto,

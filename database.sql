@@ -47,6 +47,7 @@ CREATE TABLE IF NOT EXISTS linea_pedido (
     producto_id INT,
     proveedor_nombre VARCHAR(255),
     fecha_pedido DATE,
+    cantidad INT,
     FOREIGN KEY (producto_id) REFERENCES productos(id),
     FOREIGN KEY (proveedor_nombre) REFERENCES proveedor(nombre)
 );
@@ -77,9 +78,12 @@ INSERT INTO productos (nombre, sucursal_id ,tipo_unidad, cantidad, precio, marca
 
 
 -- Insertar datos de ejemplo en la tabla linea_pedido
-INSERT INTO linea_pedido (producto_id, proveedor_nombre, fecha_pedido) VALUES
-    (1, 'FoodCo', '2024-01-15'),
-    (2, 'FashionWholesale', '2023-12-25'),
-    (3, 'TechSupply', '2023-11-07'),
-    (4, 'CleanSupplies', '2023-10-18'); 
+INSERT INTO linea_pedido (producto_id, proveedor_nombre, fecha_pedido,cantidad) VALUES
+    (1, 'FoodCo', '2024-01-15',25),
+    (2, 'FashionWholesale', '2023-12-25',50),
+    (3, 'TechSupply', '2023-11-07',100),
+    (4, 'CleanSupplies', '2023-10-18',83),
+    (1, 'FoodCo', '2024-02-16',70),
+    (1, 'FoodCo', '2024-03-15',67),
+    (1, 'FoodCo', '2024-04-17',93);
 

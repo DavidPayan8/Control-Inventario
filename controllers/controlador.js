@@ -126,15 +126,18 @@ const confirmOrder = async (req, res) => {
   }
 };
 
-const mostrarVistaGrafico = async (req, res) =>{
-res.render("report");
+const mostrarVistaGrafico = async (req, res) => {
+  let productos = await modelo.obtener_todos_productos();
+  let pedidos = await modelo.obtener_todos_pedidos();
+
+  res.render("report", { productos, pedidos });
 };
 
 const obtenerGrafico = async (req, res) => {
   let productos = await modelo.obtener_todos_productos();
-  let pedidos = await modelo.obtener_todos_pedidos();
+  let pedidos = await modelo.obtener_pedidos_ordenados_fecha();
 
-  res.json({productos,pedidos});
+  res.json({ productos, pedidos });
 };
 
 const borrarProducto = async (req, res) => {

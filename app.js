@@ -22,6 +22,10 @@ app.use(morgan("dev"));
 //Configurar la app.
 app.use(express.static(path.join(__dirname, "public")));
 app.use(express.urlencoded({ extended: false }));
+app.use((req, res, next) => {
+  res.setHeader('Content-Security-Policy', "script-src 'self' https://cdnjs.cloudflare.com");
+  next();
+});
 
 //Configurar motor de vistas
 app.set("views", path.join(__dirname, "vistas"));

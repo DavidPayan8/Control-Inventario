@@ -4,20 +4,14 @@ block content
         h1 Montañas rusas dataviz
         p Visualización de estadísticas globales
         hr
-        section.cols-2
+        section.cols-1.grafico
             figure
-            h2 Comparativa de modelos
-            canvas#modelsChart
-            figure
-             h2 Comparativa de características:
-                select#featuresOptions
-                    option(value="height") Altura (m)
-                    option(value="length") Longitud (m)
-                    option(value="speed") Velocidad (km/h)
-            canvas#featuresChart
-        section.cols-1
-            figure
-            h2 Construcciones por año
-            canvas#yearsChart(height="300px")
+                h2 Cantidad por pedidos.
+                select#productOptions
+                        option(value="0") -Todos-
+                        each opcion in productos
+                            option(value=opcion.id) #{opcion.nombre}
+                canvas#yearsChart
 block extra-scripts
-    script(src="js/report.js") 
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js")
+    script(src="/js/report.js")
