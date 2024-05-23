@@ -36,17 +36,16 @@ const agregarProducto = async (req, res) => {
   //Obtener los objetos enviados por metodo POST
   let producto = JSON.parse(req.body.producto);
   let proveedor = JSON.parse(req.body.proveedor);
-  console.log(producto, proveedor);
+  let pedido = JSON.parse(req.body.pedido);
 
   //Hacer las consultas de guardado.
-  console.log(await modelo.agregar_producto(producto, proveedor));
+  await modelo.agregar_producto(producto, proveedor);
+  let result = await modelo.obtener_todos_productos();
 
-  //Volver al index
-  /*   let productos = await modelo.obtener_todos_productos();
-  let sucursales = await modelo.obtener_sucursales();
-  console.table(productos);
+  pedido["producto_id"] = result[result.length-1].id;
 
-  res.render("index", { title: "Inventario", productos, sucursales }); */
+  await modelo.nuevo_pedido(pedido)
+
   res.redirect("/");
 };
 
@@ -110,27 +109,28 @@ const getOrderForm = async (req, res) => {
 
 const confirmOrder = async (req, res) => {
   let id = parseInt(req.params.id);
+  let results = await modelo.buscarProducto(id);
+  let precio = parseInt(results[0].precio * req.body.cantidadPedido);
   let hayProducto = await modelo.buscarProducto(id);
   let pedido = {
-    id,
-    proveedorNombre: req.body.proveedor,
-    fechaHoy: new Date().toISOString().slice(0, 10),
+    producto_id:id,
+    nombreProveedor: req.body.proveedor,
+    fecha: new Date().toISOString().slice(0, 10),
+    cantidad: req.body.cantidadPedido,
+    precio
   };
 
   if (hayProducto.length === 0) {
     res.redirect("/");
   } else {
-    await modelo.nuevoProducto(pedido);
+    await modelo.nuevo_pedido(pedido);
     orderModalActive = "active";
     res.redirect("/");
   }
 };
 
 const mostrarVistaGrafico = async (req, res) => {
-  let productos = await modelo.obtener_todos_productos();
-  let pedidos = await modelo.obtener_todos_pedidos();
-
-  res.render("report", { productos, pedidos });
+  res.render("report");
 };
 
 const obtenerGrafico = async (req, res) => {
@@ -147,7 +147,6 @@ const borrarProducto = async (req, res) => {
   if (hayProducto.length === 0) {
     res.redirect("/");
   } else {
-    console.log(hayProducto[0].id);
     await modelo.eliminarProducto(id);
     res.redirect("/");
   }

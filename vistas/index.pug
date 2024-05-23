@@ -7,17 +7,12 @@ block content
                 h2=title
                 form(action="/newProduct" method="GET")
                     button.btn-agregar(type="submit") Nuevo Producto
-                label(for="sucursal-filtro") Sucursal:
-                select(name="sucursal-filtro")
-                    option(value="") -Todos-
-                    - for (let i = 1; i <= sucursales.length; i++)
-                        option(value=i)= i
             table
                 thead
                     tr
                         th Producto
                         th Precio
-                        th Cantidad
+                        th Stock
                         th Sucursal
                         th Opciones
                 tbody
@@ -28,6 +23,6 @@ block content
                         td= `${producto.cantidad} ${producto.tipo_unidad}`
                         td= producto.sucursal_id
                         td
-                            a(href=`/order/${producto.id}`) Pedir
-                            a(href=`/edit/${producto.id}`) Editar
-                            a(href=`/delete/${producto.id}`) Eliminar
+                            a.link-order(href=`/order/${producto.id}`) Pedir
+                            a.link-edit(href=`/edit/${producto.id}`) Editar
+                            a.link-delete(href=`/delete/${producto.id}`) Eliminar

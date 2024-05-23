@@ -1,3 +1,4 @@
+import moment from "moment";
 import { hacer_consulta } from "./bbdd.js";
 
 async function getResultados(query) {
@@ -25,38 +26,67 @@ function obtener_todos_productos() {
 }
 
 //Obtener todos los pedidos.
-function obtener_todos_pedidos(){
-  const results = getResultados(
-    `SELECT * FROM linea_pedido;`
-  );
+function obtener_todos_pedidos() {
+  const results = getResultados(`SELECT * FROM linea_pedido;`);
   return results;
 }
 
 //Obtener pedidos ordenados
-function obtener_pedidos_ordenados_fecha(){
-  const results = getResultados(
+async function obtener_pedidos_ordenados_fecha() {
+  const results = await getResultados(
     `SELECT * FROM linea_pedido ORDER BY fecha_pedido ASC;
     `
   );
-  console.table(results);
+  results.forEach(pedido => {
+    let fecha = pedido.fecha_pedido;
+    pedido.fecha_pedido =  moment(fecha).format("DD/MM/YYYY");
+});
   return results;
 }
 
 //Obtener los proveedores.
-async function obtener_proveedores(){
+async function obtener_proveedores() {
   const results = getResultados(`SELECT * FROM proveedor;`);
   return results;
 }
 
 //Agregar nuevo producto.
 async function agregar_producto(newProducto, proveedor) {
+  let idProveedor;
   try {
-    //Creamos el proveedor del producto.
-    nuevo_proveedor(proveedor);
+    let hayProveedor = await buscar_proveedor(proveedor.nombreProveedor);
+
+    if (hayProveedor.length == 0) {
+      //Creamos el proveedor del producto.
+      await nuevo_proveedor(proveedor);
+      let result = await obtener_proveedores();
+      idProveedor = result.length;
+
+    }else{
+      idProveedor = hayProveedor[0].id;
+    }
 
     //Consulta para agregar un nuevo producto.
-    const query = `INSERT INTO productos (nombre, sucursal_id, tipo_unidad, cantidad, precio, marca, descripcion, proveedor_nombre) VALUES
-    ('${newProducto.nombreProducto}',${newProducto.sucursal},'${newProducto.unidad}', ${newProducto.cantidad}, ${newProducto.precio}, '${newProducto.marca}', '${newProducto.desc}', '${proveedor.nombreProveedor}');`;
+    const query = `INSERT INTO productos (nombre, sucursal_id, tipo_unidad, cantidad, precio, marca, descripcion, proveedor_id) VALUES
+    ('${newProducto.nombreProducto}',${newProducto.sucursal},'${newProducto.unidad}', ${newProducto.cantidad}, ${newProducto.precio}, '${newProducto.marca}', '${newProducto.desc}', '${idProveedor}');`;
+
+    // Ejecutar la consulta SQL.
+    const resultados = await hacer_consulta(query);
+    return resultados;
+  } catch (err) {
+    console.log("Erorr: ", err);
+  }
+}
+
+//Agregar linea de pedido
+async function nuevo_pedido(pedido) {
+  try {
+    let proveedor = await buscar_proveedor(pedido.nombreProveedor);
+    let id = proveedor[0].id;
+
+    //Consulta para agregar un nuevo pedido.
+    const query = `INSERT INTO linea_pedido (producto_id, proveedor_id, fecha_pedido, cantidad, precio_total) VALUES
+    ('${pedido.producto_id}','${id}','${pedido.fecha}', ${pedido.cantidad}, ${pedido.precio});`;
 
     // Ejecutar la consulta SQL.
     const resultados = await hacer_consulta(query);
@@ -71,7 +101,6 @@ async function buscarProducto(id) {
   try {
     const query = `SELECT * FROM productos where id = ${id}`;
     let result = hacer_consulta(query);
-    console.log(result);
 
     return result;
   } catch (err) {
@@ -81,10 +110,25 @@ async function buscarProducto(id) {
 
 //Crear un nuevo proveedor.
 async function nuevo_proveedor(proveedor) {
-  const query = `INSERT INTO proveedor (nombre, descripcion, email) VALUES
+  try {
+    const query = `INSERT INTO proveedor (nombre, descripcion, email) VALUES
     ('${proveedor.nombreProveedor}', '${proveedor.descProveedor}', '${proveedor.email}');`;
 
-  await hacer_consulta(query);
+    await hacer_consulta(query);
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+//Buscar proveedor por nombre
+async function buscar_proveedor(nombre) {
+  try {
+    const query = `SELECT * FROM proveedor WHERE nombre = '${nombre}';`;
+
+    return await hacer_consulta(query);
+  } catch (err) {
+    console.log(err);
+  }
 }
 
 //Editar producto.
@@ -101,27 +145,14 @@ async function editarProducto(producto) {
     WHERE id = ${producto.id};
     `;
     const result = await hacer_consulta(query);
-    return result
+    return result;
   } catch (error) {
     console.log(err);
   }
 }
 
-//Nuevo pedido
-async function nuevoPedido(pedido) {
-  try {
-    const query = `INSERT INTO linea_pedido (producto_id, proveedor_nombre, fecha_pedido) 
-      VALUES (${pedido.id}, '${pedido.proveedorNombre}', '${pedido.fechaHoy}');
-    `;
-    let result = hacer_consulta(query);
-    return result;
-  } catch (err) {
-    console.log(err);
-  }
-}
-
 //Eliminar producto.
-async function eliminarProducto(id){
+async function eliminarProducto(id) {
   try {
     const query = `
       DELETE FROM productos WHERE id = ${id};
@@ -141,8 +172,9 @@ export default {
   obtener_pedidos_ordenados_fecha,
   agregar_producto,
   nuevo_proveedor,
+  buscar_proveedor,
+  nuevo_pedido,
   editarProducto,
   buscarProducto,
-  nuevoPedido,
   eliminarProducto,
 };

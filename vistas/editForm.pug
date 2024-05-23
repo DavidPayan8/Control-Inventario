@@ -14,12 +14,19 @@ block content
                 input(type="number" step="0.01"  name="precio" value=`${producto.precio}` required)
                 label(for="cantidad") Cantidad
                 input(type="number" name="cantidad" value=`${producto.cantidad}` required)
-                label(for="unidad") U
-                input(type="radio", name="unidad", value="U", checked=`${producto.tipo_unidad}` == 'u')
-                label(for="unidad") Kg
-                input(type="radio", name="unidad", value="Kg", checked=`${producto.tipo_unidad}` == 'Kg')
+                p
+                    if producto.tipo_unidad === 'u'
+                        label(for="unidad") U
+                        input(type="radio", name="unidad", value="U", checked)
+                        label(for="unidad") Kg
+                        input(type="radio", name="unidad", value="Kg")
+                    else
+                        label(for="unidad") U
+                        input(type="radio", name="unidad", value="U")
+                        label(for="unidad") Kg
+                        input(type="radio", name="unidad", value="Kg", checked)
                 label(for="desc") Marca
                 input(type="text" name="marca" value=`${producto.marca}` required)
                 label(for="desc") Descripcion
                 input(type="text-area" name="desc" value=`${producto.descripcion}`)
-                button#btn-editProducto(type="submit") Actualizar
+        button#btn-editProducto(type="submit") Actualizar

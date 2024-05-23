@@ -1,6 +1,11 @@
+Chart.defaults.color = "#fff";
+Chart.defaults.borderColor = "#444";
 const productOptions = document.getElementById("productOptions");
-let cantidades = []
-let fechas = []
+const parTotal = document.getElementById("total");
+const idChart = "yearsChart";
+
+let data = [];
+let fechas = [];
 
 //Pintar los graficos
 function printChars() {
@@ -12,31 +17,27 @@ function printChars() {
       return response.json();
     })
     .then((result) => {
-       cantidades = result.pedidos.map((pedido) => pedido.cantidad);
-       fechas = result.pedidos.map((pedido) => pedido.fecha_pedido);
+      cantidades = result.pedidos.map((pedido) => pedido.cantidad);
+      fechas = result.pedidos.map((pedido) => pedido.fecha_pedido);
 
+      mostrarTotal("cantidad", cantidades);
       renderYearOrders(fechas, cantidades);
 
       //Escuchar los cambios de producto
       productOptions.addEventListener("change", (ev) => {
         ev.preventDefault();
 
-        if (ev.target.value === "0") {
-          removeData("yearsChart");
-          console.log(fechas);
-          renderYearOrders("yearsChart", cantidades, fechas);
+        if (ev.target.value === "total") {
+          data = result.pedidos.map((pedido) => pedido.precio_total);
+
+          mostrarTotal(ev.target.value, data);
+          updateChart(idChart, data, ev.target.value);
+        } else {
+          data = result.pedidos.map((pedido) => pedido.cantidad);
+
+          mostrarTotal(ev.target.value, data);
+          updateChart(idChart, data, ev.target.value);
         }
-
-        pedidosFiltrados = result.pedidos.filter(
-          (pedido) => pedido.producto_id === parseInt(ev.target.value)
-        );
-
-        cantidades = pedidosFiltrados.map((pedido) => pedido.cantidad);
-        fechas = pedidosFiltrados.map((pedido) => pedido.fecha_pedido);
-
-        removeData("yearsChart");
-        console.log(fechas);
-        renderYearOrders("yearsChart", cantidades, fechas);
       });
     })
     .catch((error) => {
@@ -49,9 +50,6 @@ function renderYearOrders(fechas, cantidad) {
   //Formatear fechas
   fechas = fechas.map((fecha) => fecha.substring(0, 10));
 
-  console.log(cantidad);
-  console.log(fechas);
-
   const data = {
     labels: fechas,
     datasets: [
@@ -60,6 +58,8 @@ function renderYearOrders(fechas, cantidad) {
         tension: 0.5,
         fill: true,
         pointBorderWidth: 5,
+        backgroundColor: "rgba(30, 103, 44, 0.5)",
+        borderColor: "#1e672c",
       },
     ],
   };
@@ -70,8 +70,37 @@ function renderYearOrders(fechas, cantidad) {
     },
   };
 
- new Chart("yearsChart", { type: "line", data, options });
+  new Chart(idChart, { type: "line", data, options });
 }
 
+//Actualizar datos
+function updateChart(chartId, data, label) {
+  const chart = Chart.getChart(chartId);
+  chart.data.datasets[0].data = data;
+  chart.data.datasets[0].label = label;
+  chart.update();
+}
+
+//Calcular total
+function calcularTotal(data) {
+  return (
+    Math.floor(data.reduce((sum, datos) => sum + parseFloat(datos), 0) * 100) /
+    100
+  );
+}
+
+//Mostrar Total
+function mostrarTotal(label, data) {
+  parTotal.innerHTML = "";
+  if (label === "total") {
+    parTotal.innerHTML = `<strong>Gasto total: </strong> ${calcularTotal(
+      data
+    )}`;
+  } else {
+    parTotal.innerHTML = `<strong>Cantidad total pedida: </strong> ${calcularTotal(
+      data
+    )}`;
+  }
+}
 
 printChars();

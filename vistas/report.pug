@@ -1,16 +1,17 @@
 extends layout
 block content
     main.container
-        h1 Montañas rusas dataviz
+        h1 Informe de pedidos
         p Visualización de estadísticas globales
         hr
         section.cols-1.grafico
             figure
-                h2 Cantidad por pedidos.
-                select#productOptions
-                        option(value="0") -Todos-
-                        each opcion in productos
-                            option(value=opcion.id) #{opcion.nombre}
+                h2 Pedidos cantidad/Precio total.
+                div.encabezadoGrafico
+                    P#total
+                    select#productOptions
+                            option(value="cantidad") -Cantidad-
+                            option(value="total") -Precio total-
                 canvas#yearsChart
 block extra-scripts
     script(src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js")

@@ -1,5 +1,6 @@
 let producto = {};
 let proveedor = {};
+let pedido = {};
 let sucursal;
 let nombreProducto;
 let precio;
@@ -11,6 +12,8 @@ let nombreProveedor;
 let cantidadPedido;
 let email;
 let descProveedor;
+let fechaFormat;
+let precioTotal;
 let pedidoRealizado = false;
 
 window.addEventListener("DOMContentLoaded", (ev) => {
@@ -55,41 +58,54 @@ window.addEventListener("DOMContentLoaded", (ev) => {
     cantidadPedido = agregarForm["cantidadPedido"].value;
     email = agregarForm["email"].value;
     descProveedor = agregarForm["descProveedor"].value;
-    proveedor = { nombreProveedor, cantidadPedido, email, descProveedor };
+    proveedor = { nombreProveedor,email, descProveedor };
+
+    //Datos pedido
+    const fechaActual = new Date();
+    const dia = String(fechaActual.getDate()).padStart(2, "0");
+    const mes = String(fechaActual.getMonth() + 1).padStart(2, "0"); // Los meses van de 0 a 11
+    const anio = fechaActual.getFullYear();
+    fechaFormat = `${anio}-${mes}-${dia}`;
+    precioTotal = cantidadPedido * precio;
+    pedido = {
+      nombreProveedor,
+      fecha: fechaFormat,
+      cantidad: cantidadPedido,
+      precio: precioTotal,
+    };
 
     //Añadir y mostrar la tarjeta de confirmacion
     sucursalCard.innerHTML = `<strong>Sucursal: </strong>${producto.sucursal}`;
-    nameProduct.innerHTML = `<strong>Nombre: </strong>${producto.nombreProducto}`;
+    nameProduct.innerHTML = `<strong>Producto: </strong>${producto.nombreProducto}`;
     marcaCard.innerHTML = `<strong>Marca: </strong>${producto.marca}`;
-    cantidadCard.innerHTML = `<strong>Cantidad pedida: </strong>${proveedor.cantidadPedido} ${producto.unidad}`;
+    cantidadCard.innerHTML = `<strong>Cantidad pedida: </strong>${cantidadPedido} ${producto.unidad}`;
     emailCard.innerHTML = `<strong>Email de pedido: </strong>${proveedor.email}`;
     desCard.innerHTML = `<strong>Detalles: </strong>${producto.desc}`;
     enviarForm["producto"].value = JSON.stringify(producto);
     enviarForm["proveedor"].value = JSON.stringify(proveedor);
+    enviarForm["pedido"].value = JSON.stringify(pedido);
 
+    openModal.classList.add("activeOrder");
+    document.body.classList.add("activeOrder");
     openModal.style.display = "block";
   });
 
   btnCancelar.addEventListener("click", (ev) => {
-    ev.preventDefault();
 
     openModal.style.display = "none";
-  });  
+  });
 });
 
-if(orderModal.className === "active"){
-  openOrderModal()
+if (orderModal.className === "active") {
+  openOrderModal();
 }
 
-
 function openOrderModal() {
-
   orderModal.innerHTML += `
       <h2>¡Pedido realizado con exito!</h2>
     `;
   setTimeout(() => {
     orderModal.innerHTML = "";
+    orderModal.className = "";
   }, 3000);
 }
-
-

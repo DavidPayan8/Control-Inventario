@@ -1,61 +1,638 @@
-.modalDialog {
-	width: 60%;
-	display: none;
-	position: fixed;
-	font-family: Arial, Helvetica, sans-serif;
-	top: 0;
-	right: 0;
-	bottom: 0;
-	left: 0;
-	background: rgba(0,0,0,0.8);
-	z-index: 99999;
-	opacity:initial;
-	-webkit-transition: opacity 400ms ease-in;
-	-moz-transition: opacity 400ms ease-in;
-	transition: opacity 400ms ease-in;
-}
-.modalDialog:target {
-	opacity:1;
-	pointer-events: auto;
-}
-.modalDialog > div {
-	width: 400px;
-	position: relative;
-	margin: 10% auto;
-	padding: 5px 20px 13px 20px;
-	border-radius: 10px;
-	background: #fff;
-	background: -moz-linear-gradient(#fff, #999);
-	background: -webkit-linear-gradient(#fff, #999);
-	background: -o-linear-gradient(#fff, #999);
-  -webkit-transition: opacity 400ms ease-in;
--moz-transition: opacity 400ms ease-in;
-transition: opacity 400ms ease-in;
-}
-.close {
-	background: #606061;
-	color: #FFFFFF;
-	line-height: 25px;
-	position: absolute;
-	right: -12px;
-	text-align: center;
-	top: -10px;
-	width: 24px;
-	text-decoration: none;
-	font-weight: bold;
-	-webkit-border-radius: 12px;
-	-moz-border-radius: 12px;
-	border-radius: 12px;
-	-moz-box-shadow: 1px 1px 3px #000;
-	-webkit-box-shadow: 1px 1px 3px #000;
-	box-shadow: 1px 1px 3px #000;
-}
-.close:hover { background: #00d9ff; }
-
-.grafico{
-	width: 100%;
+/* Reset básico para eliminar márgenes y rellenos predeterminados */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-#yearsChart{
-	width: 100%;
+body {
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+  background-color: #222946;
+  color: #fff;
+  margin: 0;
+  padding: 0;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #e5e5e5;
+  padding: 20px 20px;
+}
+
+.logo {
+  margin-left: 20px;
+}
+
+.logo img {
+  width: 100%;
+}
+
+nav {
+  width: 30%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin-left: 50px;
+}
+
+nav a {
+  color: #1e672c;
+  text-decoration: none;
+  margin-right: 20px;
+  font-size: 18px;
+}
+
+nav a:hover {
+  text-decoration: underline;
+}
+
+main {
+  padding: 20px;
+  background: #323752;
+  margin: 20px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+footer {
+  background: #e5e5e5;
+  color: black;
+  text-align: center;
+  padding: 10px 10px 10px 10px;
+  position: fixed; /* absoluted */
+  bottom: 0;
+  width: 100%;
+}
+
+.info-footer {
+  margin-top: 10px;
+}
+
+.info-footer p {
+  font-size: 14px;
+}
+
+/* Ajuste responsivo */
+@media (max-width: 768px) {
+  nav {
+    display: block;
+    text-align: center;
+    margin-left: 0;
+  }
+
+  nav a {
+    display: block;
+    margin: 10px 0;
+  }
+
+  .logo {
+    display: block;
+    text-align: center;
+    margin-bottom: 10px;
+  }
+}
+
+main.container {
+  padding: 20px;
+  background: #323752;
+  margin: 20px auto;
+  max-width: 1200px;
+  min-width: fit-content;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.headerTable {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.headerTable h2 {
+  margin: 0;
+}
+
+.headerTable form {
+  margin: 0;
+}
+
+.headerTable .btn-agregar {
+  background-color: #1e672c;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.headerTable .btn-agregar:hover {
+  background-color: #218838;
+}
+
+.tableProduct {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.tableProduct table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+.tableProduct th,
+.tableProduct td {
+  border: 1px solid #000;
+  padding: 10px;
+  text-align: left;
+}
+
+.tableProduct th {
+  opacity: 0.8;
+  background-color: #333;
+}
+
+/* Estilos para los enlaces dentro de la tabla */
+.tableProduct td a {
+  display: inline-block;
+  margin-right: 10px;
+  padding: 5px 10px;
+  border-radius: 3px;
+  text-decoration: none;
+  font-size: 14px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.link-order {
+  background-color: #7581ed;
+  color: #fff;
+}
+
+.link-order:hover {
+  background-color: #8c93f5;
+}
+
+.link-edit {
+  background-color: #ffc107;
+  color: #fff;
+}
+
+.link-edit:hover {
+  background-color: #e0a800;
+}
+
+.link-delete {
+  background-color: #dc3545;
+  color: #fff;
+}
+
+.link-delete:hover {
+  background-color: #c82333;
+}
+
+.tableProduct td a:hover {
+  text-decoration: underline;
+}
+
+#orderModal {
+  display: none; /* Oculto por defecto */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  justify-content: center;
+  align-items: center;
+}
+
+#orderModal.active {
+  display: flex;
+}
+
+#orderModal .active .modal-content {
+  background: #fff;
+  padding: 20px;
+  border-radius: 5px;
+  max-width: 500px;
+  width: 100%;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Estilo responsivo */
+@media (max-width: 768px) {
+  .headerTable {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .headerTable form {
+    margin-top: 10px;
+  }
+
+  .tableProduct th,
+  .tableProduct td {
+    padding: 5px;
+  }
+
+  .tableProduct td a {
+    display: block;
+    margin-bottom: 5px;
+  }
+}
+
+/* Form styling */
+form#orderForm {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+form#orderForm .order-producto {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Heading styling */
+form#orderForm h3 {
+  font-size: 24px;
+  color: #ddd;
+}
+
+form#orderForm h4 {
+  font-size: 20px;
+  color: #fff;
+}
+
+/* Label styling */
+form#orderForm label {
+  font-size: 16px;
+  color: #fff;
+  margin-bottom: 5px;
+}
+
+/* Input styling */
+form#orderForm input[type="number"] {
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Select styling */
+form#orderForm select {
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Button styling */
+form#orderForm button#btn-orderProduct {
+  padding: 10px 20px;
+  font-size: 16px;
+  color: #fff;
+  background-color: #007bff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  align-self: flex-start;
+}
+
+form#orderForm button#btn-orderProduct:hover {
+  background-color: #0056b3;
+}
+
+/* Responsive design */
+@media (max-width: 600px) {
+  form#orderForm {
+    padding: 10px;
+  }
+
+  form#orderForm h3 {
+    font-size: 20px;
+  }
+
+  form#orderForm h4 {
+    font-size: 18px;
+  }
+
+  form#orderForm label {
+    font-size: 14px;
+  }
+
+  form#orderForm input[type="number"],
+  form#orderForm select {
+    font-size: 14px;
+  }
+
+  form#orderForm button#btn-orderProduct {
+    font-size: 14px;
+  }
+}
+
+#openModal {
+  display: none;
+  position: fixed;
+  top: -100%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80%;
+  max-width: 600px;
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  transition: all 0.5s ease-out;
+}
+
+#openModal.activeOrder {
+  display: block;
+  animation: slideDown 0.5s ease-out forwards;
+}
+
+@keyframes slideDown {
+  0% {
+    top: -100%;
+  }
+  100% {
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+}
+
+body.activeOrder::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+}
+
+#openModal.modalDialog .card-body {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  width: 80%;
+  max-width: 500px;
+  margin: auto;
+}
+
+.card-body .titlePedido {
+  font-size: 24px;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.card-body .card-text {
+  font-size: 16px;
+  color: #666;
+  margin: 5px 0;
+}
+
+.btns-card-body {
+  padding: 10px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+/* Form styling */
+form#enviarForm,
+form#agregarForm {
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+form#enviarForm button,
+form#agregarForm button {
+  padding: 10px 20px;
+  font-size: 16px;
+  color: #fff;
+  background-color: #007bff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  align-self: flex-start;
+}
+
+form#enviarForm button#cancel-order {
+  background-color: #dc3545;
+}
+
+form#enviarForm button:hover,
+form#agregarForm button:hover {
+  opacity: 0.9;
+}
+
+/* Input and label styling */
+form#agregarForm label {
+  font-size: 16px;
+  color: #fff;
+}
+
+form#agregarForm input[type="text"],
+form#agregarForm input[type="number"],
+form#agregarForm input[type="email"],
+form#agregarForm select {
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #333;
+  border-radius: 4px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+form#agregarForm input[type="radio"] {
+  padding: 5px;
+  width: 12%;
+}
+
+form#agregarForm textarea {
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 100%;
+  box-sizing: border-box;
+  margin-bottom: 15px;
+}
+
+form#agregarForm textarea {
+  resize: vertical;
+  min-height: 100px; /* Adjust this value as needed */
+}
+
+/* Specific styling for the "Desc" label and textarea */
+form#agregarForm input[name="descProveedor"],
+input[name="desc"] {
+  height: 100px; /* Adjust this value as needed */
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 100%;
+  box-sizing: border-box;
+  margin-bottom: 15px;
+}
+
+/* Section headers */
+.datos-producto h3,
+.datos-proveedor h3 {
+  font-size: 20px;
+  color: #000;
+  margin-bottom: 10px;
+}
+
+/* Button container styling */
+.btn-guardar {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 20px;
+}
+
+/* Flexbox for two columns */
+.datos-producto,
+.datos-proveedor {
+  flex: 1;
+  margin-right: 20px;
+}
+
+.datos-proveedor {
+  margin-right: 0;
+}
+
+/* Container for the two columns */
+.row {
+  display: flex;
+  gap: 20px;
+}
+
+/* Responsive design */
+@media (max-width: 600px) {
+  main.container {
+    padding: 10px;
+  }
+
+  .card-body {
+    width: 90%;
+  }
+
+  form#agregarForm input[type="text"],
+  form#agregarForm input[type="number"],
+  form#agregarForm input[type="email"],
+  form#agregarForm input[type="radio"],
+  form#agregarForm select,
+  form#agregarForm textarea {
+    font-size: 14px;
+  }
+
+  form#agregarForm label {
+    font-size: 14px;
+  }
+
+  form#enviarForm button,
+  form#agregarForm button {
+    font-size: 14px;
+  }
+
+  .datos-producto,
+  .datos-proveedor {
+    margin-right: 0;
+    flex: 1 1 100%;
+  }
+
+  .row {
+    flex-direction: column;
+  }
+}
+
+.edit-producto {
+  color: #fff;
+  margin-bottom: 20px;
+}
+
+.edit-producto h3 {
+  font-size: 1.5em;
+  margin-bottom: 10px;
+}
+
+.edit-producto label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.edit-producto input[type="text"],
+.edit-producto input[type="number"],
+.edit-producto input[type="text-area"],
+.edit-producto select {
+  width: 50%;
+  padding: 8px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+#btn-editProducto {
+  background-color: #007bff;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#btn-editProducto:hover {
+  background-color: #0056b3;
+}
+
+h1 {
+  font-size: 1.5em;
+  margin-bottom: 10px;
+}
+
+.grafico {
+  margin-top: 20px;
+}
+
+.encabezadoGrafico {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding-top: 20px;
+  padding-right: 50px;
+}
+
+#total {
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+.grafico select {
+  padding: 5px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+canvas {
+  width: 100%;
+  height: 400px;
+  margin-bottom: 20px;
 }
