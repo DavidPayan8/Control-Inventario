@@ -49,9 +49,9 @@ CREATE TABLE IF NOT EXISTS linea_pedido (
     proveedor_id INT NOT NULL,
     fecha_pedido DATE NOT NULL,
     cantidad INT NOT NULL,
-    precio_total DECIMAL(10,2) NOT NULL,
-    FOREIGN KEY (producto_id) REFERENCES productos(id),
-    FOREIGN KEY (proveedor_id) REFERENCES proveedor(id)
+    precio_total DECIMAL(10 , 2 ) NOT NULL,
+    FOREIGN KEY (proveedor_id)
+        REFERENCES proveedor (id)
 );
 
 -- Insertar datos de ejemplo en la tabla tienda
