@@ -164,6 +164,18 @@ async function eliminarProducto(id) {
   }
 }
 
+async function productos_a_reponer(cantidad){
+  try {
+    const query = `
+    SELECT * FROM productos WHERE cantidad <= ${cantidad};
+    `;
+    let result = await hacer_consulta(query);
+    return result;
+  } catch (error) {
+    console.log(err);
+  }
+}
+
 export default {
   obtener_sucursales,
   obtener_proveedores,
@@ -177,4 +189,5 @@ export default {
   editarProducto,
   buscarProducto,
   eliminarProducto,
+  productos_a_reponer,
 };
