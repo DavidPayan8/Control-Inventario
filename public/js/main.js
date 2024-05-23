@@ -17,11 +17,12 @@ let precioTotal;
 let pedidoRealizado = false;
 
 window.addEventListener("DOMContentLoaded", (ev) => {
+
   ev.preventDefault();
 
   const agregarForm = document.getElementById("agregarForm");
   const enviarForm = document.getElementById("enviarForm");
-  const btnCancelar = document.getElementsByClassName("cancel-order");
+  const btnCancelar = document.getElementById("cancel-order");
   const openModal = document.getElementById("openModal");
   const orderForm = document.getElementById("orderForm");
   const orderModal = document.getElementById("orderModal");
@@ -91,7 +92,9 @@ window.addEventListener("DOMContentLoaded", (ev) => {
   });
 
   btnCancelar.addEventListener("click", (ev) => {
+    ev.preventDefault();
 
+    document.body.classList.remove("activeOrder");
     openModal.style.display = "none";
   });
 });
