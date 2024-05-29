@@ -17,6 +17,7 @@ let precioTotal;
 let pedidoRealizado = false;
 
 window.addEventListener("DOMContentLoaded", (ev) => {
+
   ev.preventDefault();
 
   const agregarForm = document.getElementById("agregarForm");
@@ -93,6 +94,7 @@ window.addEventListener("DOMContentLoaded", (ev) => {
   btnCancelar.addEventListener("click", (ev) => {
     ev.preventDefault();
 
+    document.body.classList.remove("activeOrder");
     openModal.style.display = "none";
     document.body.classList.remove("activeOrder");
   });
