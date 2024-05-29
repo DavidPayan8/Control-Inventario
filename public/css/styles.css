@@ -49,20 +49,12 @@ nav a:hover {
   text-decoration: underline;
 }
 
-main {
-  padding: 20px;
-  background: #323752;
-  margin: 20px;
-  border-radius: 5px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
 footer {
   background: #e5e5e5;
   color: black;
   text-align: center;
   padding: 10px 10px 10px 10px;
-  position: fixed; /* absoluted */
+/*   position: fixed; */
   bottom: 0;
   width: 100%;
 }
@@ -95,7 +87,7 @@ footer {
   }
 }
 
-main.container {
+main.container>div{
   padding: 20px;
   background: #323752;
   margin: 20px auto;
@@ -384,6 +376,7 @@ body.activeOrder::before {
 }
 
 #openModal.modalDialog .card-body {
+  color:#000;
   background-color: #fff;
   padding: 20px;
   border-radius: 8px;
@@ -636,3 +629,170 @@ canvas {
   height: 400px;
   margin-bottom: 20px;
 }
+
+#btn-volver{
+  display: inline-block; 
+  padding: 10px 20px; 
+  font-size: 16px; 
+  color: white; 
+  background-color: #007BFF; 
+  border: none; 
+  border-radius: 4px; 
+  text-align: center; 
+  text-decoration: none; 
+  cursor: pointer; 
+  transition: background-color 0.3s ease; 
+}
+
+
+#btn-volver:hover {
+  background-color: #0056b3; 
+}
+
+
+#btn-volver:active {
+  background-color: red;
+}
+
+/* #resumen {
+  position: relative;
+}
+
+#enlace {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+}
+
+
+.lista{
+  background-color: #fff;
+  border: 1px solid #fff;
+  border-radius: 8px;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 50px;
+}
+.lista:focus {
+  outline: none;
+}
+.lista div {
+  position: relative;
+  background-color: deeppink;
+  color: #fff;
+  margin: 16px;
+  border-radius: 999px;
+  line-height: 3em;
+  border: none;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px,
+    rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;
+}
+div b {
+  text-decoration: line-through;
+  font-weight: normal;
+  display: none;
+} */
+
+
+
+/* Contenedor principal */
+.lista {
+  display: flex;
+  flex-direction: column;
+  gap: 5px; 
+  padding: 20px;
+}
+
+/* Cada producto */
+.lista > div {
+  font-weight: bold;
+  color: white;
+  background-color: rgba(255, 255, 255, 0.5);
+  margin-inline: 16px;
+  margin-block: 7px;
+  border-radius: 999px;
+  line-height: 3em;
+  border: none;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px,
+    rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;
+}
+.lista:focus {
+  outline: none;
+}
+
+.lista p {
+  margin: 0;
+  font-size: 16px;
+  color: #333;
+}
+
+/* Enlaces */
+.lista a {
+  display: inline-block;
+  margin: 0 5px;
+  padding-inline: 1rem;
+  font-size: 14px;
+  color: #007BFF;
+  text-decoration: none;
+  border: 1px solid #007BFF;
+  border-radius: 999px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Efecto hover en los enlaces */
+.lista a:hover {
+  background-color: #007BFF;
+  color: #fff;
+}
+
+.producto{
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+.producto .datosProducto{
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  width: 70%;
+  padding-left: 5%;
+}
+
+.datosProducto>div{
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  width: 25%;
+}
+
+
+.opcionesProductos{
+  width: 30%;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding: 5px;
+}
+
+.header-producto{
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  height: 180%;
+}
+.header-producto .datosProducto{
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  width: 70%;
+  padding-left: 5%;
+}
+
+.lista .header-producto{
+  background-color: #0056b3;
+  margin-block: 15px;
+  border-radius: 10px;
+}
+

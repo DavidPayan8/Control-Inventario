@@ -21,7 +21,7 @@ window.addEventListener("DOMContentLoaded", (ev) => {
 
   const agregarForm = document.getElementById("agregarForm");
   const enviarForm = document.getElementById("enviarForm");
-  const btnCancelar = document.getElementsByClassName("cancel-order");
+  const btnCancelar = document.getElementById("cancel-order");
   const openModal = document.getElementById("openModal");
   const orderForm = document.getElementById("orderForm");
   const orderModal = document.getElementById("orderModal");
@@ -58,7 +58,7 @@ window.addEventListener("DOMContentLoaded", (ev) => {
     cantidadPedido = agregarForm["cantidadPedido"].value;
     email = agregarForm["email"].value;
     descProveedor = agregarForm["descProveedor"].value;
-    proveedor = { nombreProveedor,email, descProveedor };
+    proveedor = { nombreProveedor, email, descProveedor };
 
     //Datos pedido
     const fechaActual = new Date();
@@ -91,8 +91,10 @@ window.addEventListener("DOMContentLoaded", (ev) => {
   });
 
   btnCancelar.addEventListener("click", (ev) => {
+    ev.preventDefault();
 
     openModal.style.display = "none";
+    document.body.classList.remove("activeOrder");
   });
 });
 

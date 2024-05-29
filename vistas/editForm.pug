@@ -1,32 +1,34 @@
 extends layout 
 block content
     main.container
-        form(action=`/edit/${producto.id}` , method="POST")
-            div.edit-producto
-                h3 Editar producto 
-                label(for="sucursal") Sucursal
-                select(name="sucursal")
-                    - for (let i = 1; i <= sucursales.length; i++)
-                        option(value=i)= i
-                label(for="nombreProducto") Nombre
-                input(type="text" name="nombreProducto" value=`${producto.nombre}` required)
-                label(for="precio") Precio por U/Kg
-                input(type="number" step="0.01"  name="precio" value=`${producto.precio}` required)
-                label(for="cantidad") Cantidad
-                input(type="number" name="cantidad" value=`${producto.cantidad}` required)
-                p
-                    if producto.tipo_unidad === 'u'
-                        label(for="unidad") U
-                        input(type="radio", name="unidad", value="U", checked)
-                        label(for="unidad") Kg
-                        input(type="radio", name="unidad", value="Kg")
-                    else
-                        label(for="unidad") U
-                        input(type="radio", name="unidad", value="U")
-                        label(for="unidad") Kg
-                        input(type="radio", name="unidad", value="Kg", checked)
-                label(for="desc") Marca
-                input(type="text" name="marca" value=`${producto.marca}` required)
-                label(for="desc") Descripcion
-                input(type="text-area" name="desc" value=`${producto.descripcion}`)
-        button#btn-editProducto(type="submit") Actualizar
+        div
+            form(action=`/edit/${producto.id}` , method="POST")
+                div.edit-producto
+                    h3 Editar producto 
+                    label(for="sucursal") Sucursal
+                    select(name="sucursal")
+                        - for (let i = 1; i <= sucursales.length; i++)
+                            option(value=i)= i
+                    label(for="nombreProducto") Nombre
+                    input(type="text" name="nombreProducto" value=`${producto.nombre}` required)
+                    label(for="precio") Precio por U/Kg
+                    input(type="number" step="0.01"  name="precio" value=`${producto.precio}` required)
+                    label(for="cantidad") Cantidad
+                    input(type="number" name="cantidad" value=`${producto.cantidad}` required)
+                    p
+                        if producto.tipo_unidad === 'u'
+                            label(for="unidad") U
+                            input(type="radio", name="unidad", value="U", checked)
+                            label(for="unidad") Kg
+                            input(type="radio", name="unidad", value="Kg")
+                        else
+                            label(for="unidad") U
+                            input(type="radio", name="unidad", value="U")
+                            label(for="unidad") Kg
+                            input(type="radio", name="unidad", value="Kg", checked)
+                    label(for="desc") Marca
+                    input(type="text" name="marca" value=`${producto.marca}` required)
+                    label(for="desc") Descripcion
+                    input(type="text-area" name="desc" value=`${producto.descripcion}`)
+                    br
+                    button#btn-editProducto(type="submit") Actualizar

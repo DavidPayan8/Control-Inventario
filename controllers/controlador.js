@@ -3,7 +3,6 @@ import { enviar_email } from "../services/mailService.js";
 
 
 const cantidadAvisoStock = 5;
-const emailEmpresa = "davilito184@gmail.com"
 let orderModalActive = "";
 
 
@@ -13,10 +12,7 @@ const mostrarInventario = async (req, res) => {
   let productos = await modelo.obtener_todos_productos();
   let sucursales = await modelo.obtener_sucursales();
 
-  let reponerProductos = await modelo.productos_a_reponer(cantidadAvisoStock)
-  if(reponerProductos.length !== 0){
-    enviar_email("Reponer",reponerProductos,emailEmpresa)
-  };
+  let productosParaReponer = await modelo.productos_a_reponer(cantidadAvisoStock)
 
   if (orderModalActive) {
     res.render("index", {
@@ -24,6 +20,7 @@ const mostrarInventario = async (req, res) => {
       productos,
       sucursales,
       orderModalActive,
+      productosParaReponer
     });
     orderModalActive = "";
   } else {
@@ -32,6 +29,7 @@ const mostrarInventario = async (req, res) => {
       productos,
       sucursales,
       orderModalActive,
+      productosParaReponer
     });
   }
 };
@@ -50,10 +48,9 @@ const agregarProducto = async (req, res) => {
   let pedido = JSON.parse(req.body.pedido);
 
   //Hacer las consultas de guardado.
-  await modelo.agregar_producto(producto, proveedor);
-  let result = await modelo.obtener_todos_productos();
+  let idInsert = await modelo.agregar_producto(producto, proveedor);
 
-  pedido["producto_id"] = result[result.length-1].id;
+  pedido["producto_id"] = idInsert.id;
 
   await modelo.nuevo_pedido(pedido)
 
@@ -66,7 +63,7 @@ const getEditForm = async (req, res) => {
   let sucursales = await modelo.obtener_sucursales();
 
   if (producto.length === 0) {
-    res.render("/");
+    res.redirect("/");
   } else {
     res.render("editForm", { producto: producto[0], sucursales });
   }
@@ -112,7 +109,7 @@ const getOrderForm = async (req, res) => {
   let proveedores = await modelo.obtener_proveedores();
 
   if (producto.length === 0) {
-    res.render("/");
+    res.redirect("/");
   } else {
     res.render("orderForm", { producto: producto[0], proveedores });
   }
