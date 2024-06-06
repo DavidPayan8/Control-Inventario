@@ -70,13 +70,34 @@ INSERT INTO proveedor (nombre, descripcion, email) VALUES
 ('FurnitureDirect', 'Proveedor de muebles para el hogar', 'furnituredirect@example.com'),
 ('CleanSupplies', 'Proveedor de productos de limpieza', 'cleansupplies@example.com');
 
--- Insertar datos de ejemplo en la tabla productos
-INSERT INTO productos (nombre, sucursal_id ,tipo_unidad, cantidad, precio, marca, descripcion, proveedor_id) VALUES
-('DoggyDelight', 1 ,'kg', 10, 5.99, 'Marca A', 'Alimento para perros premium', 1),
-('CottonTee', 2 ,'u', 50, 2.50, 'Marca B', 'Camiseta de algodón de alta calidad', 2),
-('TechPhone', 3 ,'u', 20, 8.75, 'Marca C', 'Smartphone con las últimas características', 3),
-('PowerDrill', 4 ,'u', 30, 49.99, 'Marca D', 'Taladro inalámbrico potente', 4),
-('CleanAll', 5 ,'kg', 5, 3.25, 'Marca E', 'Limpiador multiusos para el hogar', 5);
+-- Insertar más datos de ejemplo en la tabla productos
+INSERT INTO productos (nombre, sucursal_id, tipo_unidad, cantidad, precio, marca, descripcion, proveedor_id) VALUES
+('CatChow', 1, 'kg', 15, 4.50, 'Marca F', 'Alimento para gatos', 1),
+('JeansComfort', 2, 'u', 100, 25.00, 'Marca G', 'Jeans de mezclilla cómodos', 2),
+('LaptopPro', 3, 'u', 4, 599.99, 'Marca H', 'Laptop de alto rendimiento', 3),
+('OfficeChair', 4, 'u', 20, 129.99, 'Marca I', 'Silla de oficina ergonómica', 4),
+('DishSoap', 5, 'u', 40, 1.99, 'Marca J', 'Jabón para lavar platos', 5),
+('BirdSeed', 1, 'kg', 2, 3.50, 'Marca K', 'Alimento para aves', 1),
+('WinterCoat', 2, 'u', 25, 79.99, 'Marca L', 'Abrigo de invierno', 2),
+('GamingConsole', 3, 'u', 15, 299.99, 'Marca M', 'Consola de videojuegos de última generación', 3),
+('DiningTable', 4, 'u', 3, 199.99, 'Marca N', 'Mesa de comedor de madera', 4),
+('FloorCleaner', 5, 'u', 30, 2.75, 'Marca O', 'Limpiador de suelos', 5),
+('RabbitFood', 1, 'kg', 12, 6.99, 'Marca P', 'Alimento para conejos', 1),
+('SummerDress', 2, 'u', 60, 19.99, 'Marca Q', 'Vestido de verano', 2),
+('TabletX', 3, 'u', 1, 149.99, 'Marca R', 'Tableta electrónica', 3),
+('Bookshelf', 4, 'u', 10, 89.99, 'Marca S', 'Estantería de madera', 4),
+('WindowCleaner', 5, 'KG', 5, 3.50, 'Marca T', 'Limpiador de ventanas', 5),
+('FishFlakes', 1, 'kg', 5, 2.99, 'Marca U', 'Alimento para peces', 1),
+('RunningShoes', 2, 'u', 40, 59.99, 'Marca V', 'Zapatos para correr', 2),
+('SmartWatch', 3, 'u', 15, 199.99, 'Marca W', 'Reloj inteligente', 3),
+('OfficeDesk', 4, 'u', 8, 159.99, 'Marca X', 'Escritorio de oficina', 4),
+('BathroomCleaner', 5, 'KG', 35, 2.25, 'Marca Y', 'Limpiador para baños', 5),
+('HamsterFood', 1, 'kg', 2, 4.25, 'Marca Z', 'Alimento para hámsters', 1),
+('LeatherJacket', 2, 'u', 30, 99.99, 'Marca AA', 'Chaqueta de cuero', 2),
+('SmartTV', 3, 'u', 12, 499.99, 'Marca BB', 'Televisor inteligente', 3),
+('CoffeeTable', 4, 'u', 1, 79.99, 'Marca CC', 'Mesa de centro', 4),
+('ToiletCleaner', 5, 'U', 40, 3.00, 'Marca DD', 'Limpiador de inodoros', 5);
+
 
 
 -- Insertar datos de ejemplo en la tabla linea_pedido

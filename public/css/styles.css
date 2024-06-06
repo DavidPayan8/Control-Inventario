@@ -894,6 +894,15 @@ canvas {
   overflow-x: hidden;
 }
 
+.palabraLarga {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  padding: 2px;
+}
+
+
+
 .sections::-webkit-scrollbar {
   width: 12px; /* Ancho de la scrollbar */
 }
@@ -907,10 +916,4 @@ canvas {
   border-radius: 10px; /* Extremos redondeados */
   border: 3px solid transparent; /* Espacio alrededor de la barra para hacer que sea más fácil de agarrar */
   background-clip: padding-box; /* Recortar el fondo */
-}
-.palabraLarga {
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  padding: 2px;
 }

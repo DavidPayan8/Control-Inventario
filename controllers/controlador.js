@@ -46,9 +46,9 @@ const agregarProducto = async (req, res) => {
   let pedido = JSON.parse(req.body.pedido);
 
   //Hacer las consultas de guardado.
-  let idInsert = await modelo.agregar_producto(producto, proveedor);
+  let result = await modelo.agregar_producto(producto, proveedor);
 
-  pedido["producto_id"] = idInsert.id;
+  pedido["producto_id"] = result.insertId;
 
   await modelo.nuevo_pedido(pedido);
 

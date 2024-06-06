@@ -20,7 +20,7 @@ function obtener_sucursales() {
 //Obtener todos los productos.
 function obtener_todos_productos() {
   const results = getResultados(
-    `SELECT id, nombre ,cantidad, precio, tipo_unidad,sucursal_id FROM productos;`
+    `SELECT id, nombre ,cantidad, precio, tipo_unidad,sucursal_id FROM productos ORDER BY nombre asc;`
   );
   return results;
 }
@@ -167,7 +167,7 @@ async function eliminarProducto(id) {
 async function productos_a_reponer(cantidad){
   try {
     const query = `
-    SELECT * FROM productos WHERE cantidad <= ${cantidad};
+    SELECT * FROM productos WHERE cantidad <= ${cantidad} ORDER BY cantidad asc;
     `;
     let result = await hacer_consulta(query);
     return result;
