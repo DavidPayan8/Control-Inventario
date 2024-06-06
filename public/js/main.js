@@ -136,13 +136,11 @@ if (orderModal.className === "active") {
 }
 
 function openOrderModal() {
-  document.body.classList.add("active");
   orderModal.firstElementChild.innerHTML += `
 
       <h2>¡Pedido realizado con exito!</h2>
     `;
   setTimeout(() => {
-    document.body.classList.remove("active");
     orderModal.firstElementChild.innerHTML = "";
     orderModal.className = "";
   }, 3000);
