@@ -1,19 +1,19 @@
 extends layout
 block content
     main.container
-        div
-            h1 Informe de pedidos
-            p Visualización de estadísticas globales
-            hr
-            section.cols-1.grafico
-                figure
-                    h2 Pedidos cantidad/Precio total.
-                    div.encabezadoGrafico
-                        P#total
-                        select#productOptions
-                                option(value="cantidad") -Cantidad-
-                                option(value="total") -Precio total-
-                    canvas#yearsChart
+        div.cuerpo
+            div.informe.sections
+                    h2 Visualización de estadísticas globales
+                    hr
+                    div.grafico
+                        figure
+                            h3 Pedidos cantidad/Precio total.
+                            div.encabezadoGrafico
+                                p#total
+                                select#productOptions
+                                        option(value="cantidad") -Cantidad-
+                                        option(value="total") -Precio total-
+                            canvas#yearsChart
 block extra-scripts
     script(src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js")
     script(src="/js/report.js")

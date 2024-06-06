@@ -17,39 +17,42 @@ block content
                     button.btn#confirm-order(type="submit") Confirmar
                     button.btn#cancel-order(type="button") Cancelar
     main.container
-        div
-            form#agregarForm
-                div.row
-                    div.datos-producto
-                        h3 Datos Productos
-                        label(for="sucursal") Sucursal
-                        select(name="sucursal")
-                            - for (let i = 1; i <= sucursales.length; i++)
-                                option(value=i)= i
-                        label(for="nombreProducto") Nombre
-                        input(type="text" name="nombreProducto" required)
-                        label(for="precio") Precio por U/Kg
-                        input(type="number" step="0.01"  name="precio" required)
-                        label(for="cantidad") Cantidad en stock
-                        input(type="number" name="cantidad" required)
-                        p
-                            label(for="unidad") U
-                            input(type="radio", name="unidad", value="U", checked)
-                            label(for="unidad") Kg
-                            input(type="radio", name="unidad", value="Kg")
-                        label(for="marca") Marca
-                        input(type="text" name="marca" required)
-                        label(for="desc") Descripcion
-                        input(type="text-area" name="desc")
-                    div.datos-proveedor
-                        h3 Datos Proveedor
-                        label(for="nombreProveedor") Nombre
-                        input(type="text" name="nombreProveedor" required)
-                        label(for="cantidad") Cantidad a pedir
-                        input(type="number" name="cantidadPedido" required)
-                        label(for="email") Email
-                        input(type="email" name="email" required)
-                        label(for="desc") Descripcion pedido
-                        input(type="text-area" name="descProveedor")
-                div.btn-guardar
-                    button#btn-guardarProducto(type="submit") Guardar y pedir
+        .titulo
+            h2 Nuevo Producto
+        .cuerpo
+            div.sections
+                form#agregarForm
+                    div.row
+                        div.datos-producto
+                            h3 Datos Productos
+                            label(for="sucursal") Sucursal
+                            select(name="sucursal")
+                                - for (let i = 1; i <= sucursales.length; i++)
+                                    option(value=i)= i
+                            label(for="nombreProducto") Nombre
+                            input(type="text" name="nombreProducto" required)
+                            label(for="precio") Precio por U/Kg
+                            input(type="number" step="0.01"  name="precio" required)
+                            label(for="cantidad") Cantidad en stock
+                            input(type="number" name="cantidad" required)
+                            p
+                                label(for="unidad") U
+                                input(type="radio", name="unidad", value="U", checked)
+                                label(for="unidad") Kg
+                                input(type="radio", name="unidad", value="Kg")
+                            label(for="marca") Marca
+                            input(type="text" name="marca" required)
+                            label(for="desc") Descripcion
+                            input(type="text-area" name="desc")
+                        div.datos-proveedor
+                            h3 Datos Proveedor
+                            label(for="nombreProveedor") Nombre
+                            input(type="text" name="nombreProveedor" required)
+                            label(for="cantidad") Cantidad a pedir
+                            input(type="number" name="cantidadPedido" required)
+                            label(for="email") Email
+                            input(type="email" name="email" required)
+                            label(for="desc") Descripcion pedido
+                            input(type="text-area" name="descProveedor")
+                    div.btn-guardar
+                        button#btn-guardarProducto(type="submit") Guardar y pedir

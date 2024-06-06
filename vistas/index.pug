@@ -2,64 +2,65 @@ extends layout
 block content
     main.container
         div#orderModal(class=`${orderModalActive}`)
-        div.productosReponer
-            if productosParaReponer.length !== 0
-                - for (let product of productosParaReponer)
-                    div#resumen
-                        a#enlace(href=`/order/${productosParaReponer.id}`)
-                        p texto
-                        p más texto
-            else
-                h3 No hay productos con bajo stock
-        div.lista
-            .header-producto
-                .datosProducto
-                    div                    
-                        p Nombre
-                    div
-                        p Precio
-                    div
-                        p Cantidad
-                    div
-                        p Sucursal
-                div.opcionesProductos
-                    p Opciones
-            each producto in productos
-                .producto
+            div.contentConfirm
+                img(src="./images/confirmado.png", alt="confirmado")
+        div.cuerpo
+            div.productosReponer.sections#scroller
+                h4 Productos con bajo stock
+                if productosParaReponer.length !== 0
+                    - for (let product of productosParaReponer)
+                        span#resumen
+                            a#enlace(href=`/order/${product.id}`)
+                            i.fa-solid.fa-circle-exclamation
+                            p.palabraLarga= product.nombre
+                            p= product.cantidad
+                    if masProductosReponer.length !== 0
+                        div#read-more
+                            - for (let moreProducts of masProductosReponer)
+                                span#resumen
+                                    a#enlace(href=`/order/${moreProducts.id}`)
+                                    i.fa-solid.fa-circle-exclamation
+                                    p.palabraLarga= moreProducts.nombre
+                                    p= moreProducts.cantidad
+                        button#mostrarMas(type="button")
+                            hr
+                            i.fa-solid.fa-caret-down
+                        button#mostrarMenos(type="button" style="display:none;")
+                            hr
+                            i.fa-solid.fa-caret-up
+                    else
+                        div#read-more
+                            p No hay mas productos por reponer
+                else
+                    p No hay productos con bajo stock
+            div.lista.section
+                .header-producto
                     .datosProducto
+                        div                    
+                            p Nombre
                         div
-                            p= producto.nombre
+                            p Precio
                         div
-                            p= producto.precio
+                            p Cantidad
                         div
-                            p= `${producto.cantidad} ${producto.tipo_unidad}`
-                        div
-                            p= producto.sucursal_id
+                            p Sucursal
                     div.opcionesProductos
-                        a(href=`/order/${producto.id}`) Pedir
-                        a(href=`/edit/${producto.id}`) Editar
-                        a(href=`/delete/${producto.id}`) Eliminar
-        div.tableProduct
-            div.headerTable
-                h2=title
-                form(action="/newProduct" method="GET")
-                    button.btn-agregar(type="submit") Nuevo Producto
-            table
-                thead
-                    tr
-                        th Producto
-                        th Precio
-                        th Stock
-                        th Sucursal
-                        th Opciones
-                tbody
-                - for (let producto of productos)
-                    tr
-                        td= producto.nombre
-                        td= producto.precio
-                        td= `${producto.cantidad} ${producto.tipo_unidad}`
-                        td= producto.sucursal_id
-                        td
-                            a.link-order(href=`/order/${producto.id}`) Pedir
-                            a.link-edit(href=`/edit/${producto.id}`) Editar
-                            a.link-delete(href=`/delete/${producto.id}`) Eliminar
+                        p Opciones
+                each producto in productos
+                    .producto
+                        .datosProducto
+                            div
+                                p(class="palabraLarga")= producto.nombre
+                            div
+                                p= producto.precio
+                            div
+                                p= `${producto.cantidad} ${producto.tipo_unidad}`
+                            div
+                                p= producto.sucursal_id
+                        div.opcionesProductos
+                            a(href=`/order/${producto.id}`)
+                                i.fa-solid.fa-store
+                            a(href=`/edit/${producto.id}`)
+                                i.fa-solid.fa-pen-to-square
+                            a(href=`/delete/${producto.id}`)
+                                i.fa-solid.fa-trash

@@ -1,5 +1,5 @@
-Chart.defaults.color = "#fff";
-Chart.defaults.borderColor = "#444";
+Chart.defaults.color = "black";
+Chart.defaults.borderColor = "rgb(102, 119, 136, 0.3)";
 const productOptions = document.getElementById("productOptions");
 const parTotal = document.getElementById("total");
 const idChart = "yearsChart";
@@ -95,11 +95,11 @@ function mostrarTotal(label, data) {
   if (label === "total") {
     parTotal.innerHTML = `<strong>Gasto total: </strong> ${calcularTotal(
       data
-    )}`;
+    )} $`;
   } else {
     parTotal.innerHTML = `<strong>Cantidad total pedida: </strong> ${calcularTotal(
       data
-    )}`;
+    )} productos`;
   }
 }
 

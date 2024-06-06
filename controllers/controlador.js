@@ -1,36 +1,34 @@
 import modelo from "../models/modelo.js";
 import { enviar_email } from "../services/mailService.js";
 
-
 const cantidadAvisoStock = 5;
 let orderModalActive = "";
 
-
-
 const mostrarInventario = async (req, res) => {
+  let masProductosReponer = [];
   //Obtener todos los datos a mostrar en el index
   let productos = await modelo.obtener_todos_productos();
   let sucursales = await modelo.obtener_sucursales();
 
-  let productosParaReponer = await modelo.productos_a_reponer(cantidadAvisoStock)
+  let productosParaReponer = await modelo.productos_a_reponer(
+    cantidadAvisoStock
+  );
+  if (productosParaReponer.length > 4) {
+    masProductosReponer = productosParaReponer.slice(4);
+    productosParaReponer = productosParaReponer.slice(0, 4);
+  }
+  
+  res.render("index", {
+    title: "Inventario",
+    productos,
+    sucursales,
+    orderModalActive,
+    productosParaReponer,
+    masProductosReponer,
+  });
 
   if (orderModalActive) {
-    res.render("index", {
-      title: "Inventario",
-      productos,
-      sucursales,
-      orderModalActive,
-      productosParaReponer
-    });
     orderModalActive = "";
-  } else {
-    res.render("index", {
-      title: "Inventario",
-      productos,
-      sucursales,
-      orderModalActive,
-      productosParaReponer
-    });
   }
 };
 
@@ -52,7 +50,7 @@ const agregarProducto = async (req, res) => {
 
   pedido["producto_id"] = idInsert.id;
 
-  await modelo.nuevo_pedido(pedido)
+  await modelo.nuevo_pedido(pedido);
 
   res.redirect("/");
 };
@@ -121,29 +119,28 @@ const confirmOrder = async (req, res) => {
   let precio = parseInt(results[0].precio * req.body.cantidadPedido);
   let hayProducto = await modelo.buscarProducto(id);
   let pedido = {
-    producto_id:id,
+    producto_id: id,
     nombreProveedor: req.body.proveedor,
     fecha: new Date().toISOString().slice(0, 10),
     cantidad: req.body.cantidadPedido,
-    precio
+    precio,
   };
 
   if (hayProducto.length === 0) {
     res.redirect("/");
   } else {
-
     await modelo.nuevo_pedido(pedido);
-    
+
     //Datos para el email.
     let proveedor = await modelo.buscar_proveedor(req.body.proveedor);
-    let datos ={
+    let datos = {
       pedido,
       proveedor: proveedor[0],
-      producto:hayProducto,
-    }
+      producto: hayProducto,
+    };
     orderModalActive = "active";
-    enviar_email("Pedido",datos,proveedor[0].email);
-    
+    enviar_email("Pedido", datos, proveedor[0].email);
+
     res.redirect("/");
   }
 };
